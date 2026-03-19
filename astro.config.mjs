@@ -15,7 +15,6 @@ export default defineConfig({
 
   integrations: [react()],
 
-  experimental: {
     fonts: [{
       provider: fontProviders.google(),
       name: "Geist",
