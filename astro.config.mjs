@@ -24,5 +24,5 @@ export default defineConfig({
     }]
   },
 
-  adapter: vercel()
+  adapter: vercel({ edgeMiddleware: false, webAnalytics: { enabled: true }, serverless: { runtime: 'nodejs20.x' } })
 });
