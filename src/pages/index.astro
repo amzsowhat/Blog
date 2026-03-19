@@ -1,12 +1,17 @@
 ---
 import RootLayout from "../layouts/RootLayout.astro";
+import H1 from "../components/H1.astro";
+import Link from "../components/Link.astro";
 ---
 
 <RootLayout title="soundead">
 	<main class="flex flex-col items-center justify-center min-h-screen bg-zinc-900 text-white">
-		<div class="px-4 py-10 bg-zinc-800 rounded-xl border border-zinc-700">
-			<h1 class="text-4xl font-bold mb-2">soundead</h1>
-			<p class="text-zinc-400">If you see this, the server is NOT the problem.</p>
+		<div class="px-4 py-10 text-center">
+			<H1>soundead</H1>
+			<div class="flex gap-4 mt-6 justify-center">
+				<Link href="/blog">Blog</Link>
+				<Link href="https://github.com/amzsowhat">GitHub</Link>
+			</div>
 		</div>
 	</main>
 </RootLayout>
