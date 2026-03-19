@@ -1,27 +1,13 @@
-// @ts-check
-import { defineConfig, fontProviders } from 'astro/config';
-
-import tailwindcss from '@tailwindcss/vite';
+import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
+import vercel from '@astrojs/vercel';
 
-import vercel from "@astrojs/vercel";
-
-// https://astro.build/config
 export default defineConfig({
-   output: 'server',
-  vite: {
-    plugins: [tailwindcss()]
-  },
-
   integrations: [react()],
-
-    fonts: [{
-      provider: fontProviders.google(),
-      name: "Geist",
-      cssVariable: "--font-geist",
-      fallbacks: ["Inter", "sans-serif"],
-    }]
-  },
-
-  adapter: vercel({ edgeMiddleware: false, webAnalytics: { enabled: true }, serverless: { runtime: 'nodejs20.x' } })
+  output: 'server',
+  adapter: vercel({
+    webAnalytics: {
+      enabled: true,
+    },
+  }),
 });
