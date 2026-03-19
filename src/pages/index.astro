@@ -1,10 +1,32 @@
+cat <<EOF > src/pages/index.astro
 ---
 import RootLayout from "../layouts/RootLayout.astro";
+import Navigation from "../components/Navigation.astro";
+import H1 from "../components/H1.astro";
+import AvailableForWork from "../components/AvailableForWork.astro";
+import Link from "../components/Link.astro";
 ---
 
 <RootLayout title="soundead">
-	<main style="padding: 50px; text-align: center;">
-		<h1 style="color: black;">soundead.com is working</h1>
-		<p style="color: gray;">If you see this, the layout and deployment are fine.</p>
+	<main class="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-20 text-center">
+		<Navigation />
+		
+		<div class="space-y-8 max-w-2xl mx-auto">
+			<AvailableForWork />
+			
+			<div class="space-y-4">
+				<H1>soundead</H1>
+				<p class="text-zinc-400 text-lg sm:text-xl font-light leading-relaxed">
+					Digital Craftsman & Product Engineer
+				</p>
+			</div>
+
+			<div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 pt-4">
+				<Link href="/blog">Blog</Link>
+				<Link href="https://github.com/amzsowhat" target="_blank">GitHub</Link>
+				<Link href="mailto:your-email@example.com">Contact</Link>
+			</div>
+		</div>
 	</main>
 </RootLayout>
+EOF
