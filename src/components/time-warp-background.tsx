@@ -10,17 +10,22 @@ type Props = {
 
 const palettes = {
   morning: {
-    hero: { color1: "#f4f4f5", color2: "#a1a1aa", color3: "#27272a", speed: 0.34, swirl: 0.55 },
-    panel: { color1: "#ffffff", color2: "#d4d4d8", color3: "#52525b", speed: 0.18, swirl: 1.35 },
+    hero: { color1: "#dcebd9", color2: "#fffdf7", color3: "#ead9a7" },
+    panel: { color1: "#edf5e9", color2: "#ffffff", color3: "#e4cf91" },
   },
   day: {
-    hero: { color1: "#d4d4d8", color2: "#71717a", color3: "#18181b", speed: 0.46, swirl: 0.5 },
-    panel: { color1: "#f4f4f5", color2: "#a1a1aa", color3: "#27272a", speed: 0.22, swirl: 1.5 },
+    hero: { color1: "#d9edf0", color2: "#f8fbf8", color3: "#b9d9d2" },
+    panel: { color1: "#e8f4f5", color2: "#ffffff", color3: "#a9cbc5" },
   },
   evening: {
-    hero: { color1: "#09090b", color2: "#3f3f46", color3: "#a1a1aa", speed: 0.26, swirl: 0.7 },
-    panel: { color1: "#d4d4d8", color2: "#52525b", color3: "#09090b", speed: 0.14, swirl: 1.7 },
+    hero: { color1: "#09090b", color2: "#3f3f46", color3: "#d4d4d8" },
+    panel: { color1: "#d4d4d8", color2: "#52525b", color3: "#09090b" },
   },
+} as const;
+
+const motion = {
+  hero: { speed: 0.34, swirl: 0.58, shapeScale: 0.34 },
+  panel: { speed: 0.18, swirl: 1.4, shapeScale: 0.3 },
 } as const;
 
 function getBeijingPeriod(): Period {
@@ -46,13 +51,16 @@ export default function TimeWarpBackground({ variant = "hero" }: Props) {
   }, []);
 
   const palette = palettes[period][variant];
+  const movement = motion[variant];
 
   return (
     <Warp
       {...palette}
+      speed={movement.speed}
+      swirl={movement.swirl}
       rotation={0.5}
       swirlIterations={10}
-      shapeScale={variant === "panel" ? 0.3 : 0.34}
+      shapeScale={movement.shapeScale}
       style={{ width: "100%", height: "100%" }}
     />
   );
