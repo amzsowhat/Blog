@@ -1,0 +1,44 @@
+---
+import H1 from "../components/h1.astro";
+import InfoLayout from "../layouts/InfoLayout.astro";
+import { sounds } from "../data/sounds";
+---
+
+<InfoLayout title="Sounds" description="Kakuon 的音效与声音设计试听库。">
+  <section class="p-4 sm:pt-8 sm:px-12 pb-28 min-h-dvh max-w-5xl">
+    <H1>Sounds</H1>
+    <p class="mt-5 text-lg sm:text-xl text-zinc-400 max-w-2xl leading-relaxed">
+      音效、声音实验与项目片段。每条内容都可以直接试听，后续会按类型持续整理。
+    </p>
+
+    {sounds.length > 0 ? (
+      <ul class="mt-12 grid gap-4 md:grid-cols-2">
+        {sounds.map((sound) => (
+          <li class="rounded-2xl border border-white/10 bg-white/[0.035] p-5">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <p class="text-xs uppercase tracking-[0.18em] text-zinc-500">{sound.category}</p>
+                <h2 class="mt-2 text-xl text-zinc-100">{sound.title}</h2>
+              </div>
+              {(sound.format || sound.duration) && (
+                <span class="text-xs text-zinc-500 whitespace-nowrap">{[sound.format, sound.duration].filter(Boolean).join(" · ")}</span>
+              )}
+            </div>
+            <p class="mt-3 text-sm text-zinc-400 leading-relaxed">{sound.description}</p>
+            <audio class="mt-5 w-full" controls preload="none" src={sound.source}>
+              Your browser does not support audio playback.
+            </audio>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <div class="mt-12 rounded-3xl border border-white/10 bg-white/[0.035] p-8 sm:p-12">
+        <p class="text-xs uppercase tracking-[0.2em] text-zinc-500">Library in progress</p>
+        <h2 class="mt-3 text-2xl sm:text-3xl text-zinc-100">第一批声音正在整理</h2>
+        <p class="mt-3 text-zinc-400 leading-relaxed max-w-xl">
+          播放器和远程音频接口已经预留。这里暂时不放示例素材，避免把未经确认的声音当作正式作品。
+        </p>
+      </div>
+    )}
+  </section>
+</InfoLayout>

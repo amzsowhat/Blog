@@ -1,0 +1,17 @@
+---
+import RootLayout from "../layouts/RootLayout.astro";
+import Link from "../components/link.astro";
+import WarpBackground from "../components/warp-background.tsx";
+---
+
+<RootLayout title="404" description="这个页面不存在。">
+  <div class="fixed inset-0 -z-10 opacity-50" aria-hidden="true"><WarpBackground client:load /></div>
+  <main class="min-h-screen flex items-center justify-center px-4 text-center">
+    <div>
+      <p class="text-sm uppercase tracking-[0.25em] text-zinc-500">404 · Signal lost</p>
+      <h1 class="mt-5 text-7xl sm:text-9xl font-bold tracking-tighter">No signal</h1>
+      <p class="mt-5 mb-10 text-lg text-zinc-400">这个页面不存在，或者已经移动。</p>
+      <Link href="/">Return home</Link>
+    </div>
+  </main>
+</RootLayout>

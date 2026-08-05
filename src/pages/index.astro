@@ -2,34 +2,35 @@
 import RootLayout from "../layouts/RootLayout.astro";
 import Navigation from "../components/navigation.tsx";
 import H1 from "../components/h1.astro";
-import Available from "../components/available.astro";
 import Link from "../components/link.astro";
 import WarpBackground from "../components/warp-background.tsx";
 ---
 
-<RootLayout title="soundead">
-    <div class="fixed inset-0 z-0 pointer-events-none">
-        <WarpBackground client:load />
+<RootLayout>
+  <div class="fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
+    <WarpBackground client:load />
+  </div>
+
+  <main class="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-20 text-center">
+    <Navigation client:load />
+
+    <div class="space-y-10 max-w-4xl mx-auto mt-20">
+      <p class="text-zinc-300 text-sm sm:text-base tracking-[0.22em] uppercase">
+        Sound Design · Interactive Audio
+      </p>
+
+      <div class="space-y-6">
+        <H1 size="large">Kakuon</H1>
+        <p class="text-zinc-300 text-xl sm:text-2xl font-light tracking-wide max-w-2xl mx-auto leading-relaxed">
+          记录声音如何被采集、塑造，并进入可交互的系统。
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-3 pt-6">
+        <Link href="/blog">Articles</Link>
+        <Link href="/sounds" variant="secondary">Sounds</Link>
+        <Link href="/about" variant="secondary">About</Link>
+      </div>
     </div>
-
-    <main class="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 text-center">
-		<Navigation client:load />
-		
-		<div class="space-y-10 max-w-3xl mx-auto mt-20">
-			<Available />
-			
-			<div class="space-y-6">
-				<H1>soundead</H1>
-				<p class="text-zinc-400 text-xl sm:text-2xl font-light tracking-wide max-w-lg mx-auto leading-relaxed">
-					Digital Craftsman & Product Engineer
-				</p>
-			</div>
-
-			<div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 pt-8">
-				<Link href="/blog">Blog</Link>
-				<Link href="https://github.com/amzsowhat" target="_blank">GitHub</Link>
-				<Link href="mailto:hello@soundead.com">Contact</Link>
-			</div>
-		</div>
-	</main>
+  </main>
 </RootLayout>
