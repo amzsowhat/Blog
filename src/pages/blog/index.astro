@@ -8,11 +8,12 @@ const articles = (await getCollection("blog", ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<InfoLayout title="Articles" description="Kakuon ??????????wise ?????????????>
+<InfoLayout title="Articles" description="Kakuon 的声音设计、Wwise 与交互音频文章。">
   <section class="p-4 sm:pt-8 sm:px-12 pb-28 min-h-dvh max-w-4xl">
     <H1>Articles</H1>
     <p class="mt-5 text-lg sm:text-xl text-zinc-400 max-w-2xl leading-relaxed">
-      ?????????????????????????????????????????????????    </p>
+      声音设计、交互音频与制作过程。文章支持图片、参数截图和音频对比。
+    </p>
 
     <ul class="mt-12 divide-y divide-white/10">
       {articles.map((article) => (
@@ -20,7 +21,7 @@ const articles = (await getCollection("blog", ({ data }) => !data.draft))
           <a class="block group" href={`/blog/${article.id}`}>
             <div class="flex flex-wrap items-center gap-3 text-sm text-zinc-500">
               <span>{article.data.category}</span>
-              <span aria-hidden="true">?</span>
+              <span aria-hidden="true">·</span>
               <time datetime={article.data.pubDate.toISOString()}>{formatDate(article.data.pubDate)}</time>
             </div>
             <h2 class="mt-2 text-2xl sm:text-3xl text-zinc-100 group-hover:text-white tracking-tight">

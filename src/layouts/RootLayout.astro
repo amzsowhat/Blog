@@ -5,11 +5,11 @@ import LoadingIndicator from "astro-loading-indicator/component";
 
 const {
   title,
-  description = "Kakuon ?????????????????????????,
+  description = "Kakuon 的声音设计、交互音频与实践记录。",
 } = Astro.props;
 
 const siteName = "Kakuon / Soundead";
-const pageTitle = title ? `${title} ??${siteName}` : `${siteName} ??Sound Designer`;
+const pageTitle = title ? `${title} — ${siteName}` : `${siteName} — Sound Designer`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
 ---
 
