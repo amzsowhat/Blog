@@ -5,11 +5,11 @@ import LoadingIndicator from "astro-loading-indicator/component";
 
 const {
   title,
-  description = "Kakuon 的声音设计、交互音频与实践记录。",
+  description = "soundead：声音设计、交互音频与实践记录。",
 } = Astro.props;
 
-const siteName = "Kakuon / Soundead";
-const pageTitle = title ? `${title} — ${siteName}` : `${siteName} — Sound Designer`;
+const siteName = "soundead";
+const pageTitle = title ? `${title} — ${siteName}` : "soundead — sound design";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
 ---
 
@@ -21,13 +21,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin)
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content="#09090b" />
+    <meta name="theme-color" content="#18181b" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
 
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Soundead" />
+    <meta property="og:site_name" content="soundead" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
 
@@ -38,7 +38,16 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin)
     <ClientRouter />
     <LoadingIndicator color="#f4f4f5" height="2px" />
   </head>
-  <body class="font-sans min-h-screen bg-zinc-950 text-white selection:bg-zinc-100 selection:text-zinc-950">
+  <body class="font-sans min-h-screen bg-zinc-900 text-white selection:bg-zinc-100 selection:text-zinc-950">
     <slot />
   </body>
 </html>
+
+<style is:global>
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    min-height: 100%;
+  }
+</style>
