@@ -14,8 +14,8 @@ const palettes = {
     panel: { color1: "#edf5e9", color2: "#ffffff", color3: "#e4cf91" },
   },
   day: {
-    hero: { color1: "#d9edf0", color2: "#f8fbf8", color3: "#b9d9d2" },
-    panel: { color1: "#e8f4f5", color2: "#ffffff", color3: "#a9cbc5" },
+    hero: { color1: "#ffffff", color2: "#dceeff", color3: "#8fc8ee" },
+    panel: { color1: "#ffffff", color2: "#e6f3ff", color3: "#a8d6f4" },
   },
   evening: {
     hero: { color1: "#09090b", color2: "#3f3f46", color3: "#d4d4d8" },
