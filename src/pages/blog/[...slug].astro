@@ -20,12 +20,12 @@ const { Content } = await render(article);
 
 <InfoLayout title={article.data.title} description={article.data.description}>
   <article class="p-4 sm:pt-8 sm:px-12 pb-28 min-h-dvh max-w-4xl">
-    <a href="/blog" class="text-sm text-zinc-500 hover:text-zinc-200 transition-colors">??All articles</a>
+    <a href="/blog" class="text-sm text-zinc-500 hover:text-zinc-200 transition-colors">← All articles</a>
 
     <header class="mt-8 mb-12">
       <div class="flex flex-wrap items-center gap-3 text-sm text-zinc-500">
         <span>{article.data.category}</span>
-        <span aria-hidden="true">?</span>
+        <span aria-hidden="true">·</span>
         <time datetime={article.data.pubDate.toISOString()}>{formatDate(article.data.pubDate)}</time>
       </div>
       <h1 class="mt-3 text-4xl sm:text-6xl font-bold tracking-tight text-balance">{article.data.title}</h1>
