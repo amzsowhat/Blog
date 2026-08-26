@@ -18,8 +18,8 @@ const palettes = {
     panel: { color1: "#ffffff", color2: "#e6f3ff", color3: "#a8d6f4" },
   },
   evening: {
-    hero: { color1: "#09090b", color2: "#3f3f46", color3: "#d4d4d8" },
-    panel: { color1: "#d4d4d8", color2: "#52525b", color3: "#09090b" },
+    hero: { color1: "#151a2e", color2: "#44425f", color3: "#9a7f91" },
+    panel: { color1: "#92798e", color2: "#4b4664", color3: "#171a2f" },
   },
 } as const;
 
@@ -44,24 +44,43 @@ function getBeijingPeriod(): Period {
 
 export default function TimeWarpBackground({ variant = "hero" }: Props) {
   const [period, setPeriod] = useState<Period>(() => getBeijingPeriod());
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updateMotionPreference = () => setReducedMotion(mediaQuery.matches);
+    updateMotionPreference();
+    mediaQuery.addEventListener("change", updateMotionPreference);
+
     const timer = window.setInterval(() => setPeriod(getBeijingPeriod()), 60_000);
-    return () => window.clearInterval(timer);
+    return () => {
+      window.clearInterval(timer);
+      mediaQuery.removeEventListener("change", updateMotionPreference);
+    };
   }, []);
 
   const palette = palettes[period][variant];
   const movement = motion[variant];
 
+  const overlayOpacity = period === "day" ? 0.52 : period === "morning" ? 0.42 : 0.24;
+
   return (
-    <Warp
-      {...palette}
-      speed={movement.speed}
-      swirl={movement.swirl}
-      rotation={0.5}
-      swirlIterations={10}
-      shapeScale={movement.shapeScale}
-      style={{ width: "100%", height: "100%" }}
-    />
+    <div style={{ position: "relative", width: "100%", height: "100%" }}>
+      <Warp
+        {...palette}
+        speed={reducedMotion ? 0 : movement.speed}
+        swirl={movement.swirl}
+        rotation={0.5}
+        swirlIterations={10}
+        shapeScale={movement.shapeScale}
+        style={{ width: "100%", height: "100%" }}
+      />
+      {variant === "hero" && (
+        <div
+          aria-hidden="true"
+          style={{ position: "absolute", inset: 0, background: `rgba(9, 9, 11, ${overlayOpacity})` }}
+        />
+      )}
+    </div>
   );
 }

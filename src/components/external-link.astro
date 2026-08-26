@@ -4,17 +4,25 @@ import clsx from "clsx/lite";
 type Props =  {
     href: string
     openNewTab?: boolean
+    ariaLabel?: string
+    active?: boolean
+    className?: string
 }
 
-const { href, openNewTab = true } = Astro.props
+const { href, openNewTab = true, ariaLabel, active, className } = Astro.props
 
 const pathname = Astro.url.pathname;
+const isActive = active ?? pathname === href;
 ---
 
-<a href={href} target={openNewTab ? "_blank" : "_self"} 
+<a href={href} target={openNewTab ? "_blank" : "_self"}
+    rel={openNewTab ? "noopener noreferrer" : undefined}
+    aria-label={ariaLabel}
+    aria-current={isActive ? "page" : undefined}
     class={clsx(
-        "w-fit group flex items-center gap-1 text-base hover:text-zinc-100 cursor-pointer",
-        pathname === href ? "text-zinc-100" : "text-zinc-500"
+        "w-fit group flex items-center gap-1 text-base hover:text-zinc-100 focus-visible:outline-2 outline-offset-4 outline-zinc-100/40 rounded-sm cursor-pointer",
+        isActive ? "text-zinc-100" : "text-zinc-500",
+        className,
     )}>
     <slot />
    {openNewTab &&  

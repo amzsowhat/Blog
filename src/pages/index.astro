@@ -1,6 +1,6 @@
 ---
 import RootLayout from "../layouts/RootLayout.astro";
-import Navigation from "../components/navigation.tsx";
+import Navigation from "../components/navigation.astro";
 import H1 from "../components/h1.astro";
 import TimeWarpBackground from "../components/time-warp-background.tsx";
 ---
@@ -9,13 +9,15 @@ import TimeWarpBackground from "../components/time-warp-background.tsx";
   <main class="relative w-full min-h-dvh overflow-hidden">
     <div class="absolute inset-0 z-0" aria-hidden="true">
       <TimeWarpBackground variant="hero" client:load />
-      <div class="absolute inset-0 bg-zinc-950/15"></div>
     </div>
 
     <div class="absolute inset-0 z-10 p-4 sm:p-8 flex flex-col justify-between">
-      <H1 size="large" className="home-wordmark">soundead</H1>
+      <div class="flex items-start justify-between gap-6">
+        <H1 size="home" className="home-wordmark">soundead</H1>
+        <Navigation />
+      </div>
 
-      <div class="mb-2 sm:mb-4 flex items-end justify-between gap-6">
+      <div class="mb-2 sm:mb-4">
         <div class="flex items-center gap-2 text-zinc-200">
           <span class="relative flex size-3 items-center justify-center" aria-hidden="true">
             <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-zinc-100/60"></span>
@@ -23,8 +25,6 @@ import TimeWarpBackground from "../components/time-warp-background.tsx";
           </span>
           <p class="text-sm sm:text-base tracking-wide">Sound design · Interactive audio</p>
         </div>
-
-        <Navigation client:load />
       </div>
     </div>
   </main>

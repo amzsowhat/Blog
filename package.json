@@ -1,5 +1,5 @@
 {
-  "name": "nikola-tesla",
+  "name": "soundead-blog",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -10,22 +10,18 @@
   },
   "dependencies": {
     "@astrojs/react": "^4.2.5",
-    "@astrojs/vercel": "10.0.1",
+    "@astrojs/sitemap": "^3.7.3",
     "@paper-design/shaders-react": "^0.0.29",
     "@tailwindcss/vite": "^4.1.4",
-    "@types/react": "^19.1.2",
-    "@types/react-dom": "^19.1.2",
     "astro": "6.0.6",
-    "astro-loading-indicator": "^0.7.0",
     "clsx": "^2.1.1",
-    "motion": "^12.9.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "sharp": "^0.34.1",
-    "tailwindcss": "^4.1.4",
-    "vite": "6.0.0"
+    "tailwindcss": "^4.1.4"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.16"
+    "@tailwindcss/typography": "^0.5.16",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3"
   }
 }

@@ -1,0 +1,103 @@
+---
+const links = [
+  { href: "/blog", label: "Articles" },
+  { href: "/sounds", label: "Sounds" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+];
+---
+
+<soundead-navigation>
+  <nav aria-label="Primary" class="flex items-center justify-center">
+    <div class="hidden lg:flex items-center gap-1 rounded-full border border-white/15 bg-zinc-950/35 p-1.5 shadow-lg shadow-black/10 backdrop-blur-md">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          class="px-4 py-2 rounded-full text-base text-zinc-100 hover:text-white hover:bg-zinc-100/15 focus-visible:outline-2 outline-offset-2 outline-zinc-100/40 transition-colors"
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+
+    <button
+      type="button"
+      data-menu-open
+      aria-label="Open menu"
+      aria-controls="site-menu"
+      aria-expanded="false"
+      class="lg:hidden w-10 h-10 flex items-center justify-center rounded-full border border-white/15 bg-zinc-950/35 text-white shadow-lg shadow-black/10 backdrop-blur-md cursor-pointer hover:bg-zinc-950/50 focus-visible:outline-2 outline-offset-2 outline-zinc-100/40"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="currentColor" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2S2 6.477 2 12s4.477 10 10 10" opacity=".45" />
+        <path fill="currentColor" d="M13.024 14.56c.493-.197.739-.296.932-.465c.05-.043.096-.09.139-.139c.17-.193.268-.44.465-.932c.924-2.31 1.386-3.465.938-4.124a1.5 1.5 0 0 0-.398-.398c-.66-.448-1.814.014-4.124.938c-.493.197-.74.295-.933.465c-.049.043-.095.09-.138.139c-.17.193-.268.44-.465.932c-.924 2.31-1.386 3.464-.938 4.124a1.5 1.5 0 0 0 .398.398c.66.448 1.814-.014 4.124-.938" />
+      </svg>
+    </button>
+  </nav>
+
+  <dialog
+    id="site-menu"
+    data-menu-dialog
+    aria-label="Site menu"
+    class="m-0 fixed inset-0 z-50 w-full max-w-none h-full max-h-none bg-zinc-950/75 backdrop-blur-xl text-white"
+  >
+    <div class="h-full flex flex-col items-start justify-end gap-4 p-6 sm:p-8 pb-20 sm:pb-28">
+      {links.map((link) => (
+        <a href={link.href} class="text-4xl sm:text-5xl text-zinc-100 hover:text-white focus-visible:outline-2 outline-offset-4 outline-zinc-100/40 tracking-tight">
+          {link.label}
+        </a>
+      ))}
+
+      <button
+        type="button"
+        data-menu-close
+        class="mt-3 text-lg text-zinc-400 hover:text-white focus-visible:outline-2 outline-offset-4 outline-zinc-100/40"
+      >
+        Close
+      </button>
+    </div>
+  </dialog>
+</soundead-navigation>
+
+<script>
+  class SoundeadNavigation extends HTMLElement {
+    connectedCallback() {
+      const openButton = this.querySelector<HTMLButtonElement>("[data-menu-open]");
+      const closeButton = this.querySelector<HTMLButtonElement>("[data-menu-close]");
+      const dialog = this.querySelector<HTMLDialogElement>("[data-menu-dialog]");
+
+      if (!openButton || !closeButton || !dialog) return;
+
+      const close = () => {
+        if (dialog.open) dialog.close();
+        openButton.setAttribute("aria-expanded", "false");
+        openButton.focus();
+      };
+
+      openButton.addEventListener("click", () => {
+        dialog.showModal();
+        openButton.setAttribute("aria-expanded", "true");
+        closeButton.focus();
+      });
+      closeButton.addEventListener("click", close);
+      dialog.addEventListener("close", close);
+      dialog.addEventListener("cancel", (event) => {
+        event.preventDefault();
+        close();
+      });
+      dialog.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          event.preventDefault();
+          close();
+        }
+      });
+      dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) close();
+      });
+    }
+  }
+
+  if (!customElements.get("soundead-navigation")) {
+    customElements.define("soundead-navigation", SoundeadNavigation);
+  }
+</script>

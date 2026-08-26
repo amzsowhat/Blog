@@ -1,7 +1,6 @@
 ---
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
-import LoadingIndicator from "astro-loading-indicator/component";
 
 const {
   title,
@@ -36,7 +35,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin)
     <meta name="twitter:description" content={description} />
 
     <ClientRouter />
-    <LoadingIndicator color="#f4f4f5" height="2px" />
   </head>
   <body class="font-sans min-h-screen bg-zinc-900 text-white selection:bg-zinc-100 selection:text-zinc-950">
     <slot />

@@ -10,7 +10,7 @@ const { title, description } = Astro.props;
   <div class="relative isolate flex gap-4 w-full max-w-screen-xl min-h-dvh">
     <aside aria-hidden="true" class="relative z-0 w-4 md:min-w-2xs xl:min-w-sm sm:min-h-screen sm:ml-4 sm:pb-4">
       <div class="fixed z-0 w-4 md:w-2xs xl:w-sm h-full sm:bottom-4 sm:rounded-b-full overflow-hidden">
-        <TimeWarpBackground variant="panel" client:load />
+        <TimeWarpBackground variant="panel" client:idle />
       </div>
     </aside>
 
