@@ -6,31 +6,50 @@ import InfoLayout from "../../layouts/InfoLayout.astro";
 
 const articles = (await getCollection("blog", ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const folders = new Map<string, typeof articles>();
+
+for (const article of articles) {
+  const parts = article.id.split("/");
+  const folder = parts.length > 1 ? parts[0] : "站点";
+  const group = folders.get(folder) ?? [];
+  group.push(article);
+  folders.set(folder, group);
+}
 ---
 
-<InfoLayout title="Articles" description="Kakuon 的声音设计、Wwise 与交互音频文章。">
+<InfoLayout title="Articles" description="文章目录">
   <section class="p-4 sm:pt-8 sm:px-12 pb-28 min-h-dvh max-w-4xl">
     <H1>Articles</H1>
-    <p class="mt-5 text-lg sm:text-xl text-zinc-400 max-w-2xl leading-relaxed">
-      声音设计、交互音频与制作过程。文章支持图片、参数截图和音频对比。
-    </p>
 
-    <ul class="mt-12 divide-y divide-white/10">
-      {articles.map((article) => (
-        <li class="py-7 first:pt-0">
-          <a class="block group" href={`/blog/${article.id}`}>
-            <div class="flex flex-wrap items-center gap-3 text-sm text-zinc-500">
-              <span>{article.data.category}</span>
-              <span aria-hidden="true">·</span>
-              <time datetime={article.data.pubDate.toISOString()}>{formatDate(article.data.pubDate)}</time>
-            </div>
-            <h2 class="mt-2 text-2xl sm:text-3xl text-zinc-100 group-hover:text-white tracking-tight">
-              {article.data.title}
-            </h2>
-            <p class="mt-2 text-zinc-400 leading-relaxed max-w-2xl">{article.data.description}</p>
-          </a>
-        </li>
+    <div class="mt-12 space-y-14">
+      {[...folders].map(([folder, entries]) => (
+        <section aria-labelledby={`folder-${folder}`}>
+          <div class="flex items-center gap-3 text-zinc-400">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M3.75 6.75A1.75 1.75 0 0 1 5.5 5h4.1l1.7 2h7.2a1.75 1.75 0 0 1 1.75 1.75v8.75a1.75 1.75 0 0 1-1.75 1.75h-13a1.75 1.75 0 0 1-1.75-1.75V6.75Z" stroke="currentColor" stroke-width="1.5" />
+            </svg>
+            <h2 id={`folder-${folder}`} class="text-sm font-medium tracking-[0.08em]">{folder}</h2>
+            <span class="text-xs text-zinc-600">{entries.length}</span>
+          </div>
+
+          <ul class="mt-4 divide-y divide-white/10 border-t border-white/10">
+            {entries.map((article) => (
+              <li class="py-7">
+                <a class="block group" href={`/blog/${article.id}`}>
+                  <div class="flex flex-wrap items-center gap-3 text-sm text-zinc-500">
+                    <time datetime={article.data.pubDate.toISOString()}>{formatDate(article.data.pubDate)}</time>
+                  </div>
+                  <h3 class="mt-2 text-2xl sm:text-3xl text-zinc-100 group-hover:text-white tracking-tight">
+                    {article.data.title}
+                  </h3>
+                  <p class="mt-2 text-zinc-400 leading-relaxed max-w-2xl">{article.data.description}</p>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
       ))}
-    </ul>
+    </div>
   </section>
 </InfoLayout>
