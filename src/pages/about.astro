@@ -1,24 +1,103 @@
 ---
 import H1 from "../components/h1.astro";
 import InfoLayout from "../layouts/InfoLayout.astro";
+
+const skills = [
+  "Sound Design", "Interactive Audio", "Field Recording", "Foley", "Reaper",
+  "Wwise", "CRIWARE", "Unity", "Unreal Engine", "ReaScript", "Python", "Cabbage",
+];
 ---
 
-<InfoLayout title="About" description="关于声音设计师 Kakuon。">
-  <section class="p-4 sm:pt-8 sm:px-12 pb-28 min-h-dvh max-w-4xl">
-    <H1>About</H1>
+<InfoLayout title="About" description="鹤童，游戏声音设计师与交互音频实践者。">
+  <section class="p-4 sm:pt-8 sm:px-12 pb-28 min-h-dvh max-w-5xl">
+    <H1>我是鹤童</H1>
 
-    <div class="mt-10 space-y-8 text-xl sm:text-2xl text-zinc-400 leading-relaxed text-balance">
-      <p>
-        我是 <strong class="text-zinc-100 font-medium">Kakuon</strong>，从事声音设计，也关注声音在交互系统中的组织方式。
+    <div class="mt-8 max-w-3xl">
+      <p class="text-2xl sm:text-4xl text-zinc-100 leading-tight text-balance">
+        游戏声音设计师，关注声音设计、技术实现，以及两者如何共同服务游戏体验。
       </p>
-      <p>
-        Soundead 收录我的声音设计文章与实践记录，内容包括录音、编辑、合成、混音，以及 Wwise 等交互音频工具中的实现。
+      <p class="mt-6 text-lg sm:text-xl text-zinc-400 leading-relaxed">
+        我喜欢录音、Foley、合成和风格化声音，也会把一个设计从 DAW 一直跟进到 Wwise、CRIWARE、Unity 或 Unreal Engine 中。对我来说，声音既要有辨识度，也要准确回应玩法、叙事和玩家操作。
+      </p>
+    </div>
+
+    <div class="mt-16 grid gap-10 border-t border-white/10 pt-10 lg:grid-cols-[1fr_2fr]">
+      <h2 class="text-sm uppercase tracking-[0.2em] text-zinc-500">工作经历</h2>
+      <div class="space-y-12">
+        <article>
+          <div class="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
+            <h3 class="text-2xl text-zinc-100">声音设计师 · 完美世界《桃花源》项目组</h3>
+            <p class="shrink-0 text-zinc-500">2024.07 — 至今</p>
+          </div>
+          <p class="mt-5 text-lg text-zinc-400 leading-relaxed">
+            参与《诛仙 2》的 UI 音效重构、职业技能设计、Wwise SFX 模块整理与常规音频 Debug；同时负责《完美世界手游》多个资料片及横版、竖版、海外版的音效制作、迁移与重构。
+          </p>
+        </article>
+
+        <article>
+          <div class="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
+            <h3 class="text-2xl text-zinc-100">声音设计师 · 百奥游戏</h3>
+            <p class="shrink-0 text-zinc-500">2021.08 — 2023.08</p>
+          </div>
+          <p class="mt-5 text-lg text-zinc-400 leading-relaxed">
+            负责《时序残响》的整体音效设计与 CRIWARE 音频整合，覆盖 UI / UE、特殊语音效果链、PV 与剧情；参与项目从 2D 到 3D 的重构，并为《食物语》《奥比岛》《奥拉星 2》等项目制作角色、技能、交互与场景音效。
+          </p>
+        </article>
+      </div>
+    </div>
+
+    <div class="mt-12 grid gap-10 border-t border-white/10 pt-10 lg:grid-cols-[1fr_2fr]">
+      <h2 class="text-sm uppercase tracking-[0.2em] text-zinc-500">代表项目</h2>
+      <div class="space-y-10">
+        <article>
+          <h3 class="text-2xl text-zinc-100">Hunter Roulette</h3>
+          <p class="mt-4 text-lg text-zinc-400 leading-relaxed">
+            独立负责项目从零到上线后的整体音频设计与实现。使用 Unity 原生 Audio Mixer Group、Snapshot、EQ 与 Distortion 搭建音频结构和状态切换，为 PC 与移动端建立轻赛博、美漫和怪诞感并存的声音风格。
+          </p>
+          <p class="mt-4 text-lg text-zinc-400 leading-relaxed">
+            同时主导九个语种的配音本地化，以表演分类、录音反馈和后期修音统一不同语言的情绪表达，并在上线后维护 AI 多语种语音资源。
+          </p>
+        </article>
+
+        <article>
+          <h3 class="text-2xl text-zinc-100">音频工作流与 AI</h3>
+          <p class="mt-4 text-lg text-zinc-400 leading-relaxed">
+            推动在线与本地生成式音效、语音和歌声模型的评估与接入；搭建飞书表格与 ComfyUI 的批量生成管线，并开发 ReaScript 工具，把 ElevenLabs 等生成式音频 API 接入 Reaper。也制作过无缝 Loop 与采样合成工具，用于快速生成环境和材质纹理。
+          </p>
+        </article>
+      </div>
+    </div>
+
+    <div class="mt-12 grid gap-10 border-t border-white/10 pt-10 lg:grid-cols-[1fr_2fr]">
+      <h2 class="text-sm uppercase tracking-[0.2em] text-zinc-500">擅长</h2>
+      <div>
+        <p class="text-lg text-zinc-400 leading-relaxed">
+          我的工作覆盖声音概念、素材制作、交互结构、引擎实现、混音与 Debug。我擅长根据世界观和视觉语言建立声音风格，也习惯从信息层级、材质、节奏和运行成本出发，让声音在真实游戏环境中稳定工作。
+        </p>
+        <div class="mt-6 flex flex-wrap gap-2">
+          {skills.map((skill) => <span class="rounded-full bg-white/5 px-3 py-1.5 text-sm text-zinc-300">{skill}</span>)}
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-12 grid gap-10 border-t border-white/10 pt-10 lg:grid-cols-[1fr_2fr]">
+      <h2 class="text-sm uppercase tracking-[0.2em] text-zinc-500">职业方向</h2>
+      <p class="text-lg text-zinc-400 leading-relaxed">
+        我希望继续把核心能力放在声音设计、游戏内实现、审美与表达上，在内容品质和完整体验投入更深的项目中，逐步承担从声音方向、资源制作到系统落地的完整工作。同时持续研究工具与 AI 工作流，让技术减少重复劳动，把更多时间留给判断和创作。
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-10 border-t border-white/10 pt-10 lg:grid-cols-[1fr_2fr]">
+      <h2 class="text-sm uppercase tracking-[0.2em] text-zinc-500">认证与奖项</h2>
+      <p class="text-lg text-zinc-400 leading-relaxed">
+        Wwise 101、251 认证；2022 CIGA Game Jam 北京站团队二等奖与最佳音频设计奖；大连市数字新媒体专项职业认证。毕业于大连民族大学网络工程专业。
       </p>
     </div>
 
     <div class="mt-14 flex flex-wrap gap-3">
-      <a href="/blog" class="px-5 py-2 rounded-full bg-zinc-100 text-zinc-900 hover:outline-2 outline-offset-2 outline-zinc-100">Read articles</a>
-      <a href="/sounds" class="px-5 py-2 rounded-full text-zinc-100 bg-white/5 hover:bg-white/10">Listen to sounds</a>
+      <a href="/blog" class="px-5 py-2 rounded-full bg-zinc-100 text-zinc-900 hover:outline-2 outline-offset-2 outline-zinc-100">阅读文章</a>
+      <a href="/sounds" class="px-5 py-2 rounded-full text-zinc-100 bg-white/5 hover:bg-white/10">试听作品</a>
+      <a href="mailto:amzsowhat@gmail.com" class="px-5 py-2 rounded-full text-zinc-100 bg-white/5 hover:bg-white/10">联系我</a>
     </div>
   </section>
 </InfoLayout>
