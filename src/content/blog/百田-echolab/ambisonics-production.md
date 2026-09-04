@@ -1,7 +1,7 @@
 ---
 title: "Ambisonics 全景声制作"
 description: "一阶 Ambisonics 的通道与编码方式，以及使用 Reaper、B360、Nx Ambisonics 和 Wwise 的完整制作流程。"
-pubDate: 2026-09-04
+pubDate: 2023-07-20
 category: 百田 · echolab
 tags: [Ambisonics, Reaper, Wwise]
 draft: false

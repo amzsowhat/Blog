@@ -1,7 +1,7 @@
 ---
 title: "关于怪物语音合成的研究"
 description: "从拟音素材、Pitch 与 Formant，到控制器演绎和 DAW 剪辑，分享怪物语音制作中的一些实用思路。"
-pubDate: 2026-09-03
+pubDate: 2023-07-12
 category: 百田 · echolab
 tags:
   - Creature Vocals

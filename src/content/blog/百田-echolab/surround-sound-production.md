@@ -1,7 +1,7 @@
 ---
 title: "5.1 / 7.1 环绕声制作"
 description: "三种环绕声制作思路：双耳下混、Panorama 空间布局，以及在 Reaper 中制作多声道素材并交给 Wwise 处理。"
-pubDate: 2026-09-04
+pubDate: 2023-07-27
 category: 百田 · echolab
 tags: [Surround Sound, Reaper, Wwise]
 draft: false
