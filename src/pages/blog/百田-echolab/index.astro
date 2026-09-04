@@ -1,0 +1,29 @@
+---
+import { getCollection } from "astro:content";
+import H1 from "../../../components/h1.astro";
+import { formatDate } from "../../../lib/utils";
+import InfoLayout from "../../../layouts/InfoLayout.astro";
+
+const articles = (await getCollection("blog", ({ data }) => !data.draft))
+  .filter((article) => article.id.startsWith("百田-echolab/"))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<InfoLayout title="百田-echolab" description="百田-echolab 文章目录">
+  <section class="p-4 sm:pt-8 sm:px-12 pb-28 min-h-dvh max-w-4xl">
+    <a href="/blog" class="text-sm text-zinc-500 hover:text-zinc-200 transition-colors">← Articles</a>
+    <div class="mt-8"><H1>百田-echolab</H1></div>
+
+    <ul class="mt-12 divide-y divide-white/10 border-t border-white/10">
+      {articles.map((article) => (
+        <li class="py-7">
+          <a class="block group" href={`/blog/${article.id}`}>
+            <time class="text-sm text-zinc-500" datetime={article.data.pubDate.toISOString()}>{formatDate(article.data.pubDate)}</time>
+            <h2 class="mt-2 text-2xl sm:text-3xl text-zinc-100 group-hover:text-white tracking-tight">{article.data.title}</h2>
+            <p class="mt-2 text-zinc-400 leading-relaxed max-w-2xl">{article.data.description}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</InfoLayout>
