@@ -10,6 +10,21 @@ for (const item of sounds) {
   entries.push(item);
   collections.set(item.collection, entries);
 }
+
+const collectionGroups = [...collections].map(([collection, entries]) => {
+  const sections = new Map<string, typeof entries>();
+  for (const item of entries) {
+    const sectionEntries = sections.get(item.section) ?? [];
+    sectionEntries.push(item);
+    sections.set(item.section, sectionEntries);
+  }
+
+  return {
+    collection,
+    count: entries.length,
+    sections: [...sections],
+  };
+});
 ---
 
 <InfoLayout title="Sounds" description="音频与视频作品。">
@@ -18,19 +33,11 @@ for (const item of sounds) {
 
     {sounds.length > 0 ? (
       <div class="mt-12 space-y-16">
-        {[...collections].map(([collection, entries]) => {
-          const sections = new Map<string, typeof entries>();
-          for (const item of entries) {
-            const sectionEntries = sections.get(item.section) ?? [];
-            sectionEntries.push(item);
-            sections.set(item.section, sectionEntries);
-          }
-
-          return (
+        {collectionGroups.map(({ collection, count, sections }) => (
             <section aria-labelledby={`collection-${collection}`}>
               <div class="flex items-end justify-between gap-4 border-b border-white/10 pb-4">
                 <h2 id={`collection-${collection}`} class="text-2xl sm:text-3xl text-zinc-100 tracking-tight">{collection}</h2>
-                <span class="text-xs text-zinc-500">{entries.length} tracks</span>
+                <span class="text-xs text-zinc-500">{count} tracks</span>
               </div>
 
               <div class="mt-8 space-y-10">
@@ -63,8 +70,7 @@ for (const item of sounds) {
                 ))}
               </div>
             </section>
-          );
-        })}
+        ))}
       </div>
     ) : (
       <p class="mt-10 text-zinc-500">尚无公开条目。</p>
