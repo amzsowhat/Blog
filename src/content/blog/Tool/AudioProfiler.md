@@ -1,7 +1,7 @@
 ---
 title: "Audio Profiler Timeline：Unity 音频播放时间线工具"
-description: "在 Unity Play Mode 中按 Audio Mixer Group 追踪 AudioSource 播放事件的 Editor Window。"
-pubDate: 2026-09-08
+description: "在 Unity Play Mode 中监看、捕获并导出 AudioSource 播放事件的 Editor Window。"
+pubDate: 2025-07-15
 category: Tool
 tags: [Unity, Audio, Tool]
 draft: false
@@ -9,36 +9,40 @@ draft: false
 
 [下载 AudioProfiler.zip](/downloads/Tool/AudioProfiler/AudioProfiler.zip)
 
-## 用途
+Audio Profiler Timeline 是 Unity Editor 的实时音频播放时间线工具。进入 Play Mode 后，它会记录场景内 <code>AudioSource</code> 的播放事件，按 <code>AudioMixerGroup</code> 分组显示，并提供 LIVE 监看、片段捕获与 JSON 导出。
 
-Audio Profiler Timeline 是 Unity Editor Window，用于在 Play Mode 中记录场景内 <code>AudioSource</code> 的播放事件。窗口按 <code>AudioMixerGroup</code> 分组显示事件，并列出 GameObject 名称、音频片段名称、播放时长和波形预览，便于检查声音是否在预期时间与总线中播放。
+![Audio Profiler Timeline 界面](/images/Blog/Tool/AudioProfiler/AudioProfilerTimeline.png)
 
 ## 安装
 
 1. 下载并解压文件包。
-2. 将其中的 <code>AudioProfiler</code> 文件夹和 <code>AudioProfiler.meta</code> 放入 Unity 项目的 <code>Assets/Editor/</code> 目录。
+2. 将 <code>AudioProfilerWindow.cs</code> 放入 Unity 项目的 <code>Assets/Editor/AudioTools/</code> 目录。
 3. 等待 Unity 编译完成。
 4. 在菜单栏选择 <code>AudioTools &gt; Audio Profiler Timeline</code>。
 
-## 使用
+压缩包不包含 <code>.meta</code> 文件。Unity 导入脚本后会自动生成对应元文件。
 
-进入 Play Mode 后打开窗口，时间线会持续记录正在播放的 <code>AudioSource</code>。
+## LIVE 监看
 
-- 按 Mixer Group 分组显示播放事件；同一总线使用固定颜色。
-- 每条事件显示对象名称、Clip 名称和播放时长。
-- 搜索框可按对象或 Clip 名称过滤。
-- 暂停与恢复按钮控制记录状态；清空按钮移除当前记录；Stop All 会停止当前已追踪的 AudioSource。
-- 缩放按钮调整时间线密度；窗口默认保留最近 10 秒的事件。
+进入 Play Mode 后，窗口默认显示最近一段播放时间线。
 
-## 波形与限制
+- 按 Mixer Group 分组，显示对象名称、Clip 名称、播放时长和事件块。
+- 使用 <code>timeSamples</code>、循环回绕和重播检测补充 <code>isPlaying</code> 的状态判断。
+- 能识别 Clip 切换、非循环声音重播和循环声音回绕。
+- 搜索框可按对象名或 Clip 名过滤。
+- <code>Merge</code> 可将同一 Mixer Group 内相同 Clip 的多次播放合并到一条轨道。
+- 状态栏显示当前 Voices、Sources、Events、扫描耗时和刷新频率。
 
-工具会尝试读取 <code>AudioClip</code> 数据绘制波形，并将最多 10 秒的样本用于预览。无法通过 <code>AudioClip.GetData</code> 读取采样数据的声音仍会显示播放事件，但不会显示波形。
+## CAPTURE 与导出
 
-该工具只追踪 Play Mode 中通过 <code>AudioSource</code> 播放的声音，不用于分析构建后的播放器音频或其他绕过 <code>AudioSource</code> 的播放路径。
+点击 <code>REC</code> 开始捕获当前播放片段，点击 <code>STOP</code> 结束捕获并进入 <code>CAPTURE</code> 回看。
 
-## 文件内容
+- Capture 时间线保留片段内的相对开始与结束时间。
+- <code>Export JSON</code> 导出 Clip、GameObject、层级路径、Mixer Group、起止时间、持续时长和循环状态。
+- <code>Stop Audio</code> 停止场景内全部 AudioSource；<code>Clear</code> 清空当前监看与捕获数据。
 
-- <code>AudioProfiler/AudioProfilerWindow.cs</code>：Editor Window 源码。
-- <code>AudioProfiler/AudioProfilerWindow.cs.meta</code>：Unity 脚本元文件。
-- <code>AudioProfiler.meta</code>：Unity 文件夹元文件。
-- <code>README.md</code>：安装与使用说明。
+## 使用范围
+
+工具只追踪 Play Mode 中通过 <code>AudioSource</code> 播放的声音，不用于分析构建后的播放器，也不覆盖绕过 <code>AudioSource</code> 的播放路径。
+
+文件包包含最终版 <code>AudioProfilerWindow.cs</code> 与安装说明。
