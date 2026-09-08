@@ -9,7 +9,7 @@ draft: false
 
 环境声、机械持续声、风雨和 room tone 等素材，通常需要整理为长度可控的循环资产。常见做法是切开素材、重排首尾、处理交叉淡化，再反复试听接缝。Loopy 将循环定位、接缝处理、时长控制和导出集中到同一套流程中。
 
-![Loopy 插件界面](/images/Blog/Plugin/LoopyLoopWorkflow/loopy-interface.png)
+![Loopy 插件界面](/images/Blog/Plugin/LoopyLoopWorkflow/LoopyInterface.png)
 
 ## 两种处理模式
 

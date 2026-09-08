@@ -16,7 +16,7 @@ draft: false
 | <code>BP_Trigger_AkAudioBox</code> | 固定的方形区域 | 盒状触发器 |
 | <code>BP_Trigger_AkAudioSphere</code> | 固定的圆形区域 | 球形触发器 |
 
-![可用的场景音频蓝图](/images/blog/ue-audio-blueprints/blueprint-list.png)
+![可用的场景音频蓝图](/images/Blog/UE/UEAudioBlueprints/BlueprintList.png)
 
 门使用 <code>BP_SoundAKDoor</code>；规则的小范围区域使用 Box 或 Sphere；河流、道路等沿路径延伸的区域使用 <code>BP_SplineAkAudio</code>。
 
@@ -28,7 +28,7 @@ draft: false
 4. 调整触发器大小，或继续编辑样条线，使范围覆盖实际发声区域。
 5. 保存时只保存 <code>Plan</code> 层，并只提交该层到 SVN。
 
-![Box 蓝图的位置、尺寸和 Audio Id](/images/blog/ue-audio-blueprints/audio-id-box.png)
+![Box 蓝图的位置、尺寸和 Audio Id](/images/Blog/UE/UEAudioBlueprints/AudioIdBox.png)
 
 没有对应音频 ID 时，先补齐配置表；不要在蓝图中填入未登记的 ID。
 
@@ -36,7 +36,7 @@ draft: false
 
 <code>BP_SplineAkAudio</code> 用于河流、道路等沿路径延展的声音。放置蓝图后选择样条线端点进行编辑。
 
-![样条线端点](/images/blog/ue-audio-blueprints/spline-endpoint.png)
+![样条线端点](/images/Blog/UE/UEAudioBlueprints/SplineEndpoint.png)
 
 - 按住 Alt 并拖动端点，新增端点。
 - 端点可以移动和旋转；拖动端点两侧的控制柄调整曲线弯曲度。
@@ -59,7 +59,7 @@ draft: false
 
 ## 保存与提交
 
-![只保存 Plan 层](/images/blog/ue-audio-blueprints/plan-save.png)
+![只保存 Plan 层](/images/Blog/UE/UEAudioBlueprints/PlanSave.png)
 
 - 音频 ID 已在配置表登记。
 - 触发范围覆盖目标对象，没有明显越界。
