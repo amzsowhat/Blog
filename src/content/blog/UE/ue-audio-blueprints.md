@@ -20,12 +20,6 @@ draft: false
 
 门使用 <code>BP_SoundAKDoor</code>；规则的小范围区域使用 Box 或 Sphere；河流、道路等沿路径延伸的区域使用 <code>BP_SplineAkAudio</code>。
 
-![门蓝图的触发范围](/images/blog/ue-audio-blueprints/door-trigger.png)
-
-![Sphere 触发范围](/images/blog/ue-audio-blueprints/sphere-trigger.png)
-
-![Box 触发范围](/images/blog/ue-audio-blueprints/box-trigger.png)
-
 ## 基础配置
 
 1. 打开目标地图并加载 <code>Plan</code> 层。
