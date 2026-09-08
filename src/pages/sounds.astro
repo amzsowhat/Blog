@@ -1,6 +1,7 @@
 ---
 import H1 from "../components/h1.astro";
 import InfoLayout from "../layouts/InfoLayout.astro";
+import TimeWarpBackground from "../components/time-warp-background.tsx";
 import { sounds } from "../data/sounds";
 
 const collections = new Map<string, typeof sounds>();
@@ -43,14 +44,17 @@ const collectionGroups = [...collections].map(([collection, entries]) => {
                 </span>
               </summary>
 
-              <div class="space-y-10 border-t border-white/10 px-5 py-7 sm:px-7 sm:py-8">
+              <div class="collection-content relative isolate overflow-hidden border-t border-white/10 px-5 py-7 sm:px-7 sm:py-8">
+                <div class="collection-wave absolute inset-0 -z-10 opacity-0 transition-opacity duration-700" aria-hidden="true">
+                  <TimeWarpBackground variant="hero" client:load />
+                </div>
+                <div class="relative space-y-10">
                 {[...sections].map(([section, sectionEntries]) => (
                   <section aria-labelledby={`section-${collection}-${section}`}>
                     <h3 id={`section-${collection}-${section}`} class="text-sm uppercase tracking-[0.18em] text-zinc-500">{section}</h3>
                     <ul class="mt-4 grid gap-4">
                       {sectionEntries.map((item) => (
-                        <li class="sound-item relative isolate overflow-hidden rounded-xl border border-white/10 bg-black/10 p-5 transition-colors duration-500">
-                          <div class="sound-wave absolute inset-0 -z-10 opacity-0 transition-opacity duration-700" aria-hidden="true"></div>
+                        <li class="sound-item rounded-xl border border-white/10 bg-zinc-950/55 p-5 backdrop-blur-sm transition-colors duration-500">
                           <div class="flex items-start gap-4">
                             <h4 class="text-xl text-zinc-100">{item.title}</h4>
                             {item.duration && <span class="ml-auto text-xs text-zinc-500 whitespace-nowrap">{item.duration}</span>}
@@ -70,6 +74,7 @@ const collectionGroups = [...collections].map(([collection, entries]) => {
                     </ul>
                   </section>
                 ))}
+                </div>
               </div>
             </details>
         ))}
@@ -85,22 +90,7 @@ const collectionGroups = [...collections].map(([collection, entries]) => {
   .sound-collection[open] .collection-arrow { transform: rotate(180deg); }
   .collection-arrow { display: inline-block; transition: transform 220ms ease; }
   .sound-item.is-playing { border-color: rgb(255 255 255 / 0.22); }
-  .sound-item.is-playing .sound-wave { opacity: 0.55; }
-  .sound-wave {
-    background:
-      radial-gradient(ellipse at 18% 120%, transparent 0 27%, rgb(143 200 238 / 0.32) 28%, transparent 30% 39%, rgb(220 235 217 / 0.22) 40%, transparent 42%),
-      radial-gradient(ellipse at 78% -35%, transparent 0 31%, rgb(234 217 167 / 0.2) 32%, transparent 34% 45%, rgb(255 255 255 / 0.12) 46%, transparent 48%),
-      linear-gradient(110deg, rgb(21 26 46 / 0.7), rgb(68 66 95 / 0.42));
-    background-size: 115% 115%, 120% 120%, 100% 100%;
-    animation: sound-wave-drift 7s ease-in-out infinite alternate;
-  }
-  @keyframes sound-wave-drift {
-    from { background-position: 0% 0%, 100% 0%, 0 0; transform: scale(1); }
-    to { background-position: 8% 5%, 90% 8%, 0 0; transform: scale(1.06); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .sound-wave { animation: none; }
-  }
+  .sound-collection.has-playing .collection-wave { opacity: 0.78; }
 </style>
 
 <script>
@@ -112,9 +102,15 @@ const collectionGroups = [...collections].map(([collection, entries]) => {
         if (other !== player && !other.paused) other.pause();
       }
       document.querySelectorAll(".sound-item.is-playing").forEach((entry) => entry.classList.remove("is-playing"));
+      document.querySelectorAll(".sound-collection.has-playing").forEach((entry) => entry.classList.remove("has-playing"));
       item?.classList.add("is-playing");
+      item?.closest(".sound-collection")?.classList.add("has-playing");
     });
-    player.addEventListener("pause", () => item?.classList.remove("is-playing"));
-    player.addEventListener("ended", () => item?.classList.remove("is-playing"));
+    const stopWave = () => {
+      item?.classList.remove("is-playing");
+      item?.closest(".sound-collection")?.classList.remove("has-playing");
+    };
+    player.addEventListener("pause", stopWave);
+    player.addEventListener("ended", stopWave);
   }
 </script>
