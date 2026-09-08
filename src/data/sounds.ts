@@ -60,14 +60,6 @@ export const sounds: MediaItem[] = [
     format: "MP3",
   },
   {
-    title: "Flow On",
-    collection: "Hunter Roulette OST",
-    section: "登录",
-    type: "audio",
-    source: "/Media/Sounds/HunterRouletteOST/Login/Flow On.mp3",
-    format: "MP3",
-  },
-  {
     title: "For Christmas",
     collection: "Hunter Roulette OST",
     section: "登录",
