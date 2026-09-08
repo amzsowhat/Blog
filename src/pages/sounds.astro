@@ -53,9 +53,6 @@ const collectionGroups = [...collections].map(([collection, entries]) => {
                     <ul class="mt-4 grid gap-4">
                       {sectionEntries.map((item) => (
                         <li class="sound-item relative isolate overflow-hidden rounded-xl border border-white/10 bg-zinc-950/55 p-5 transition-colors duration-500">
-                          <div class="item-wave absolute inset-0 -z-10 opacity-0 transition-opacity duration-500" aria-hidden="true">
-                            <TimeWarpBackground variant="hero" client:visible />
-                          </div>
                           <div class="relative flex items-start gap-4">
                             <h4 class="text-xl text-zinc-100">{item.title}</h4>
                             {item.duration && <span class="ml-auto text-xs text-zinc-500 whitespace-nowrap">{item.duration}</span>}
@@ -66,7 +63,7 @@ const collectionGroups = [...collections].map(([collection, entries]) => {
                               Your browser does not support video playback.
                             </video>
                           ) : (
-                            <audio class="relative mt-5 w-full" controls preload="none" src={item.source}>
+                            <audio class="relative mt-5 w-full" controls preload="metadata" src={item.source}>
                               Your browser does not support audio playback.
                             </audio>
                           )}
@@ -86,16 +83,25 @@ const collectionGroups = [...collections].map(([collection, entries]) => {
   </section>
 </InfoLayout>
 
+<div id="sound-wave-parking" aria-hidden="true">
+  <div id="shared-item-wave" class="item-wave">
+    <TimeWarpBackground variant="hero" client:load />
+  </div>
+</div>
+
 <style>
   .sound-collection > summary::-webkit-details-marker { display: none; }
   .sound-collection[open] .collection-arrow { transform: rotate(180deg); }
   .collection-arrow { display: inline-block; transition: transform 220ms ease; }
   .sound-item.is-playing { border-color: rgb(255 255 255 / 0.45); background: transparent; }
-  .sound-item.is-playing .item-wave { opacity: 1; }
+  #sound-wave-parking { position: fixed; left: -9999px; top: 0; width: 1px; height: 1px; overflow: hidden; }
+  .item-wave { position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity 500ms ease; }
+  .sound-item.is-playing > .item-wave { opacity: 1; }
 </style>
 
 <script>
   const audioPlayers = document.querySelectorAll<HTMLAudioElement>(".sound-item audio");
+  const sharedWave = document.querySelector<HTMLElement>("#shared-item-wave");
   for (const player of audioPlayers) {
     const item = player.closest(".sound-item");
     player.addEventListener("play", () => {
@@ -103,6 +109,7 @@ const collectionGroups = [...collections].map(([collection, entries]) => {
         if (other !== player && !other.paused) other.pause();
       }
       document.querySelectorAll(".sound-item.is-playing").forEach((entry) => entry.classList.remove("is-playing"));
+      if (sharedWave && item) item.prepend(sharedWave);
       item?.classList.add("is-playing");
     });
     const stopWave = () => {
