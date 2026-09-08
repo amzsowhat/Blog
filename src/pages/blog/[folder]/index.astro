@@ -1,0 +1,62 @@
+---
+import { getCollection } from "astro:content";
+import H1 from "../../../components/h1.astro";
+import { formatDate } from "../../../lib/utils";
+import InfoLayout from "../../../layouts/InfoLayout.astro";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const articles = (await getCollection("blog", ({ data }) => !data.draft))
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  const folders = new Map<string, typeof articles>();
+
+  for (const article of articles) {
+    const parts = article.id.split("/");
+    if (parts.length < 2 || parts[0] === "百田-echolab") continue;
+    const folder = parts[0];
+    const entries = folders.get(folder) ?? [];
+    entries.push(article);
+    folders.set(folder, entries);
+  }
+
+  return [...folders].map(([folder, entries]) => ({
+    params: { folder },
+    props: { folder, entries },
+  }));
+}
+
+const folderLabels: Record<string, string> = {
+  tool: "Tool",
+  plugin: "Plugin",
+  ue: "UE",
+};
+
+const { folder, entries } = Astro.props;
+const label = folderLabels[folder] ?? folder.replace(/(^|-)([a-z])/g, (_, prefix, letter) => `${prefix}${letter.toUpperCase()}`);
+---
+
+<InfoLayout title={label} description={`${label} 文章`}>
+  <section class="p-4 sm:pt-8 sm:px-12 pb-28 min-h-dvh max-w-4xl">
+    <a href="/blog" class="text-sm text-zinc-500 hover:text-zinc-200 transition-colors">← All articles</a>
+    <div class="mt-8">
+      <H1>{label}</H1>
+    </div>
+
+    <ul class="mt-12 divide-y divide-white/10 border-t border-white/10">
+      {entries.map((article) => (
+        <li class="py-7">
+          <a class="block group" href={`/blog/${article.id}`}>
+            <div class="flex flex-wrap items-center gap-3 text-sm text-zinc-500">
+              <time datetime={article.data.pubDate.toISOString()}>{formatDate(article.data.pubDate)}</time>
+            </div>
+            <h2 class="mt-2 text-2xl sm:text-3xl text-zinc-100 group-hover:text-white tracking-tight">
+              {article.data.title}
+            </h2>
+            <p class="mt-2 text-zinc-400 leading-relaxed max-w-2xl">{article.data.description}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</InfoLayout>
