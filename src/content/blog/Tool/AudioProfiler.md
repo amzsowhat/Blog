@@ -13,15 +13,6 @@ Audio Profiler Timeline 是 Unity Editor 的实时音频播放时间线工具。
 
 ![Audio Profiler Timeline 界面](/images/Blog/Tool/AudioProfiler/AudioProfilerTimeline.png)
 
-## 安装
-
-1. 下载并解压文件包。
-2. 将 <code>AudioProfilerWindow.cs</code> 放入 Unity 项目的 <code>Assets/Editor/AudioTools/</code> 目录。
-3. 等待 Unity 编译完成。
-4. 在菜单栏选择 <code>AudioTools &gt; Audio Profiler Timeline</code>。
-
-压缩包不包含 <code>.meta</code> 文件。Unity 导入脚本后会自动生成对应元文件。
-
 ## LIVE 监看
 
 进入 Play Mode 后，窗口默认显示最近一段播放时间线。
@@ -44,5 +35,3 @@ Audio Profiler Timeline 是 Unity Editor 的实时音频播放时间线工具。
 ## 使用范围
 
 工具只追踪 Play Mode 中通过 <code>AudioSource</code> 播放的声音，不用于分析构建后的播放器，也不覆盖绕过 <code>AudioSource</code> 的播放路径。
-
-文件包包含最终版 <code>AudioProfilerWindow.cs</code> 与安装说明。
