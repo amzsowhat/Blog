@@ -7,11 +7,7 @@ tags: [UE, Blueprint, Game Audio]
 draft: false
 ---
 
-场景内的音频蓝图用于把指定声音放进地图，并让它在合适的空间范围内播放。配置的重点不在于把音频随意拖进场景，而是先按目标区域的形状选择蓝图，再完成音频 ID、触发范围和层级提交。
-
-本文描述的是项目内的 <code>BP_SoundAKDoor</code>、<code>BP_SplineAkAudio</code>、<code>BP_Trigger_AkAudioBox</code> 与 <code>BP_Trigger_AkAudioSphere</code> 蓝图；名称和资源路径随工程而变，流程本身可作为场景音频布置的参考。
-
-## 先按区域形状选择蓝图
+## 蓝图类型
 
 | 蓝图 | 适用对象 | 触发范围 |
 | --- | --- | --- |
@@ -20,49 +16,59 @@ draft: false
 | <code>BP_Trigger_AkAudioBox</code> | 固定的方形区域 | 盒状触发器 |
 | <code>BP_Trigger_AkAudioSphere</code> | 固定的圆形区域 | 球形触发器 |
 
-线状对象优先使用样条线。规则、局部的空间范围则使用 Box 或 Sphere；门的开合与穿越声效使用门专用蓝图更容易匹配实际形状。
+![可用的场景音频蓝图](/images/blog/ue-audio-blueprints/blueprint-list.png)
 
-## 基础配置流程
+门使用 <code>BP_SoundAKDoor</code>；规则的小范围区域使用 Box 或 Sphere；河流、道路等沿路径延伸的区域使用 <code>BP_SplineAkAudio</code>。
 
-1. 打开需要配置音频的地图，并加载 <code>Plan</code> 层。
-2. 将合适的音频蓝图拖入场景，摆到目标位置。
-3. 在 <code>AkAudioInfo.xlsx</code> 中查找对应的音频 ID，并填入蓝图属性中的 <code>Audio Id</code>。
-4. 调整触发器大小，或继续编辑样条线，让范围覆盖实际的发声区域。
+![门蓝图的触发范围](/images/blog/ue-audio-blueprints/door-trigger.png)
+
+![Sphere 触发范围](/images/blog/ue-audio-blueprints/sphere-trigger.png)
+
+![Box 触发范围](/images/blog/ue-audio-blueprints/box-trigger.png)
+
+## 基础配置
+
+1. 打开目标地图并加载 <code>Plan</code> 层。
+2. 将对应的音频蓝图拖入场景，放到目标位置。
+3. 在 <code>AkAudioInfo.xlsx</code> 中查找音频 ID，填写到蓝图属性的 <code>Audio Id</code>。
+4. 调整触发器大小，或继续编辑样条线，使范围覆盖实际发声区域。
 5. 保存时只保存 <code>Plan</code> 层，并只提交该层到 SVN。
 
-如果表中没有目标音频 ID，需要先由策划补齐配置；不要在场景蓝图中自行填入未登记的 ID。
+![Box 蓝图的位置、尺寸和 Audio Id](/images/blog/ue-audio-blueprints/audio-id-box.png)
 
-## 样条线：河流、道路与不规则边界
+没有对应音频 ID 时，先补齐配置表；不要在蓝图中填入未登记的 ID。
 
-<code>BP_SplineAkAudio</code> 适合沿路径延展的声音，例如河流或成片环境声。将蓝图放在路径的一端后，选择样条线端点即可开始编辑。
+## 样条线
 
-- 按住 Alt 并拖动一个端点，可以新增端点。
-- 端点可移动和旋转；通过端点两侧的控制柄可以调整曲线弯曲度。
-- 沿目标路径逐段补点，避免用过少的点强行覆盖明显转折。
+<code>BP_SplineAkAudio</code> 用于河流、道路等沿路径延展的声音。放置蓝图后选择样条线端点进行编辑。
 
-蓝图属性中需要重点检查以下项目：
+![样条线端点](/images/blog/ue-audio-blueprints/spline-endpoint.png)
 
-- <code>Audio Id</code>：要播放声音的 ID，对应 <code>AkAudioInfo.xlsx</code>。
-- <code>Max Distance</code>：以样条线为中心轴时，声音可被听到的最大半径。
-- <code>Cur Distance</code>：程序测试变量，不作为场景配置项修改。
+- 按住 Alt 并拖动端点，新增端点。
+- 端点可以移动和旋转；拖动端点两侧的控制柄调整曲线弯曲度。
+- 沿目标路径逐段补点，避免用过少的点覆盖明显转折。
 
-## 封闭区域：湖泊、森林和不规则面状声音
+样条线属性中需要检查：
 
-湖泊、森林等需要在一个不规则区域内持续存在的声音，可使用样条线的封闭模式：在 Spline 组件中勾选 <code>ClosedLoop</code>。
+- <code>Audio Id</code>：对应 <code>AkAudioInfo.xlsx</code> 中的声音 ID。
+- <code>Max Distance</code>：以样条线为中心轴时，可听范围的最大半径。
+- <code>Cur Distance</code>：程序测试变量，不需要修改。
 
-封闭模式与普通样条线的差别在于：声音只在边界内生效，区域外不再播放；进入区域后，声音会在水平面内跟随玩家，因此听感更接近持续的环境底声，而不是固定在某个单一发声点。
+## 封闭区域
 
-这个模式有两个容易忽略的限制：
+湖泊、森林等不规则面状区域使用样条线的封闭模式：在 Spline 组件中勾选 <code>ClosedLoop</code>。
 
-1. Z 轴范围由样条线最高点和最低点决定。玩家飞出该高度范围后，声音不会继续跟随到更高或更低的位置。
-2. 封闭区域必须由凸多边形组成，任一内角不能超过 180°。凹形湖泊或森林边界需要拆成多个凸区域拼接；将样条线点类型改为线性，更容易检查多边形边界。
+- 声音只在边界内生效，区域外不播放。
+- 进入区域后，声音在水平面内随玩家移动。
+- Z 轴范围由样条线最高点和最低点决定；超出该高度范围时，声音不会继续跟随。
+- 封闭区域必须是凸多边形。凹形边界拆分为多个凸区域；将样条线点类型改为线性，便于检查边界。
 
-## 提交前检查
+## 保存与提交
 
-- 音频 ID 已在配置表中登记。
+![只保存 Plan 层](/images/blog/ue-audio-blueprints/plan-save.png)
+
+- 音频 ID 已在配置表登记。
 - 触发范围覆盖目标对象，没有明显越界。
-- 样条线的转折和封闭边界与场景轮廓一致。
-- 封闭区域已经检查凸多边形限制与 Z 轴范围。
+- 样条线转折和封闭边界与场景轮廓一致。
+- 封闭区域已检查凸多边形限制与 Z 轴范围。
 - 本次改动只发生在 <code>Plan</code> 层，保存和 SVN 提交也只包含该层。
-
-这套约束把声音配置、地图层级和资源 ID 分开管理，能减少范围错误和无关场景改动。
