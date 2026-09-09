@@ -40,9 +40,8 @@ const collectionGroups = [...collections].map(([collection, entries]) => {
                 {collection === "Hunter Roulette OST" && (
                   <img class="absolute inset-0 -z-20 h-full w-full object-cover object-center" src="/Media/Sounds/HunterRouletteOST/Cover.jpg" alt="" />
                 )}
-                <span class="absolute inset-0 -z-10 bg-gradient-to-t from-zinc-950 via-zinc-950/55 to-zinc-950/15" aria-hidden="true"></span>
-                <h2 id={`collection-${collection}`} class="text-2xl sm:text-3xl text-white tracking-tight drop-shadow-lg">{collection}</h2>
-                <span class="collection-arrow text-lg text-white drop-shadow-lg" aria-hidden="true">⌄</span>
+                <h2 id={`collection-${collection}`} class="cover-title text-2xl sm:text-3xl text-white tracking-tight">{collection}</h2>
+                <span class="collection-arrow cover-title text-lg text-white" aria-hidden="true">⌄</span>
               </summary>
 
               <div class="border-t border-white/10 px-5 py-7 sm:px-7 sm:py-8">
@@ -54,7 +53,7 @@ const collectionGroups = [...collections].map(([collection, entries]) => {
                       {sectionEntries.map((item) => (
                         <li class="sound-item relative isolate overflow-hidden rounded-xl border border-white/10 bg-zinc-950/55 p-5 transition-colors duration-500">
                           <div class="relative flex items-center gap-4">
-                            <h4 class="text-xl text-zinc-100">{item.title}</h4>
+                            <h4 class="track-title text-xl text-zinc-100">{item.title}</h4>
                             {item.duration && <span class="ml-auto text-xs text-zinc-500 whitespace-nowrap">{item.duration}</span>}
                             {item.type === "audio" && (
                               <button class="track-play ml-auto rounded-full border border-white/20 px-4 py-2 text-sm text-zinc-100 transition-colors hover:bg-white/10" type="button" data-source={item.source} data-title={item.title}>
@@ -88,7 +87,7 @@ const collectionGroups = [...collections].map(([collection, entries]) => {
 
 <div id="sound-wave-parking" aria-hidden="true">
   <div id="shared-item-wave" class="item-wave">
-    <TimeWarpBackground variant="hero" client:load />
+    <TimeWarpBackground variant="hero" dim={false} client:load />
   </div>
   <audio id="shared-audio-player" class="relative mt-5 w-full" controls preload="none">
     Your browser does not support audio playback.
@@ -99,7 +98,13 @@ const collectionGroups = [...collections].map(([collection, entries]) => {
   .sound-collection > summary::-webkit-details-marker { display: none; }
   .sound-collection[open] .collection-arrow { transform: rotate(180deg); }
   .collection-arrow { display: inline-block; transition: transform 220ms ease; }
+  .cover-title,
+  .sound-item.is-playing .track-title {
+    -webkit-text-stroke: 0.35px rgb(0 0 0 / 0.72);
+    text-shadow: 0 1px 2px rgb(0 0 0 / 0.95), 0 0 10px rgb(0 0 0 / 0.9);
+  }
   .sound-item.is-playing { border-color: rgb(255 255 255 / 0.45); background: transparent; }
+  .sound-item.is-playing .track-play { background: rgb(9 9 11 / 0.62); }
   #sound-wave-parking { position: fixed; left: -9999px; top: 0; width: 1px; height: 1px; overflow: hidden; }
   .item-wave { position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity 500ms ease; }
   .sound-item.is-playing > .item-wave { opacity: 1; }

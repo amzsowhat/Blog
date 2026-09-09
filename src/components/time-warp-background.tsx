@@ -6,6 +6,7 @@ type Variant = "hero" | "panel";
 
 type Props = {
   variant?: Variant;
+  dim?: boolean;
 };
 
 const palettes = {
@@ -42,7 +43,7 @@ function getBeijingPeriod(): Period {
   return "evening";
 }
 
-export default function TimeWarpBackground({ variant = "hero" }: Props) {
+export default function TimeWarpBackground({ variant = "hero", dim = true }: Props) {
   const [period, setPeriod] = useState<Period>(() => getBeijingPeriod());
   const [reducedMotion, setReducedMotion] = useState(false);
 
@@ -75,7 +76,7 @@ export default function TimeWarpBackground({ variant = "hero" }: Props) {
         shapeScale={movement.shapeScale}
         style={{ width: "100%", height: "100%" }}
       />
-      {variant === "hero" && (
+      {variant === "hero" && dim && (
         <div
           aria-hidden="true"
           style={{ position: "absolute", inset: 0, background: `rgba(9, 9, 11, ${overlayOpacity})` }}
